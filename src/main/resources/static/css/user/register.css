@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+label {
+    display: inline-block;
+    width: 8em;
+    line-height: 150%;
+}
+
+.err {
+    color: red;
+}
+/*ディレクトリstatic>css>userのuserが作成されてなくて反映されなかった件*/
