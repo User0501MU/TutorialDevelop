@@ -9,27 +9,36 @@
     <h1>User情報管理システム</h1>
     <h2>User更新</h2>
     <form method="post" th:action="@{/user/update/{id}/(id=${user.id})}" th:object="${user}">
-        <label for="id">ID</label>
+		<label for="id">ID</label>
         <input type="hidden" id="id" name="id" th:value="*{id}" th:text="*{id}">
         <!--<input type="hidden" id="id" name="id" th:value="*{id}" th:text="*{id}">-->
 		<br>
+
         <label for="name">名前</label>
-        <input type="text" th:field="*{name}">
+		<input type="text" th:field="*{name}" th:errorclass="err"><!--err-->
+		<span th:errors="*{name}" class="err"></span><!--err-->
         <br>
+
         <label for="gender">性別</label>
-        <select th:field="*{gender}">
+        <select th:field="*{gender}" th:errorclass="err"><!--err-->
             <option value="" th:text="選択してください">
             <option th:each="item:${T(com.techacademy.entity.User.Gender).values()}" th:value="${item}" th:text="${item}" th:selected="*{gender} == ${item}">
         <!--idの値を隠し項目として保持しています。これはコントローラーにidの値を渡すためです。-->
 		<!--th:selected="*{gender} == ${item}" を追加しています。 user.gender の値と一致していたら selected 属性を出力します。-->
 		</select>
+		<span th:errors="*{gender}" class="err"></span><!--err-->
         <br>
+
         <label for="age">年齢</label>
-        <input type="text" th:field="*{age}">
+        <input type="text" th:field="*{age}" th:errorclass="err"><!--err-->
+		<span th:errors="*{age}" class="err"></span><!--err-->
         <br>
+
         <label for="email">メールアドレス</label>
-        <input type="text" th:field="*{email}">
+		<input type="text" th:field="*{email}" th:errorclass="err"><!--err-->
+		<span th:errors="*{email}" class="err"></span><!--err-->
         <br>
+
         <br>
         <input type="submit" value="更新実行">
         <a th:href="@{/user/list}">更新せずに一覧に戻る</a>

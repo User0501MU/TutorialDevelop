@@ -57,7 +57,8 @@ public class UserController {
     }
     // ----- 変更ここまで -----
 
-    /** User更新画面を表示 */
+
+    /** 更新実行後のUser更新画面を表示 */
     @GetMapping("/update/{id}/")
     public String getUser(@PathVariable("id") Integer id, Model model) {
         // Modelに登録
@@ -83,4 +84,40 @@ public class UserController {
         // 一覧画面にリダイレクト
         return "redirect:/user/list";
     }
+
+//★下記、値が正しい場合はデータが保存され、User一覧画面に遷移します。
+    //※右の更新ボタンを押すと、http://localhost:8080/user/update/4/になっている
+
+    /** User更新画面を表示 */
+    @GetMapping("/update")
+    public String getUpdate(@ModelAttribute User user) {
+        // User登録画面に遷移
+        return "user/update";
+    }
+
+    /** User登録処理 */
+    @PostMapping("/update")
+    public String postupdate(@Validated User user, BindingResult res, Model model) {
+        if(res.hasErrors()) {
+            // エラーあり
+            return getRegister(user);
+        }
+        // User登録
+        service.saveUser(user);
+        // 一覧画面にリダイレクト
+        return "redirect:/user/list";
+    }
+
+    /** 更新実行後のUser更新画面を表示 */
+
+
+
+
+
+
+
+
+
+
+
 }
