@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.yaml.snakeyaml.tokens.Token.ID;
 
 import com.techacademy.entity.User;
 import com.techacademy.service.UserService;
@@ -58,7 +59,8 @@ public class UserController {
     // ----- 変更ここまで -----
 
 
-    /** 更新実行後のUser更新画面を表示 */
+    //---★★課題lesson18
+    /**User更新画面を表示 */
     @GetMapping("/update/{id}/")
     public String getUser(@PathVariable("id") Integer id, Model model) {
         // Modelに登録
@@ -66,15 +68,26 @@ public class UserController {
         // User更新画面に遷移
         return "user/update";
     }
+//★getUserメソッドは「ユーザー情報を更新するための画面を表示するため」のメソッド
+
+ //★postUserメソッドは、「画面で更新ボタンを押した時に、画面から入力された値をデータべースに反映するため」のメソッド
 
     /** User更新処理 */
     @PostMapping("/update/{id}/")
-    public String postUser(User user) {
-        // User登録
+    public String postUser(@Validated User user, BindingResult result, Model model) {
+        // ★バリデーションチェックを実行
+        if (result.hasErrors()) {
+            // エラーがある場合、更新画面に戻る
+            return "user/update";
+        }
+
+        // バリデーションが通った場合、Userを更新
         service.saveUser(user);
+
         // 一覧画面にリダイレクト
         return "redirect:/user/list";
     }
+    //★★ここまで。
 
     /** User削除処理 */
     @PostMapping(path="list", params="deleteRun")
@@ -87,36 +100,6 @@ public class UserController {
 
 //★下記、値が正しい場合はデータが保存され、User一覧画面に遷移します。
     //※右の更新ボタンを押すと、http://localhost:8080/user/update/4/になっている
-
-    /** User更新画面を表示 */
-    @GetMapping("/update")
-    public String getUpdate(@ModelAttribute User user) {
-        // User登録画面に遷移
-        return "user/update";
-    }
-
-    /** User登録処理 */
-    @PostMapping("/update")
-    public String postupdate(@Validated User user, BindingResult res, Model model) {
-        if(res.hasErrors()) {
-            // エラーあり
-            return getRegister(user);
-        }
-        // User登録
-        service.saveUser(user);
-        // 一覧画面にリダイレクト
-        return "redirect:/user/list";
-    }
-
-    /** 更新実行後のUser更新画面を表示 */
-
-
-
-
-
-
-
-
 
 
 
