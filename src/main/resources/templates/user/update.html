@@ -29,8 +29,10 @@
 		<span th:errors="*{gender}" class="err"></span><!--err-->
         <br>
 
+		<!--★★値なしの時も赤文字入力チェック追記-->
         <label for="age">年齢</label>
         <input type="text" th:field="*{age}" th:errorclass="err"><!--err-->
+		<!--入力チェックのエラーメッセージをThymeleafで表示する方法です。-->
 		<span th:errors="*{age}" class="err"></span><!--err-->
         <br>
 

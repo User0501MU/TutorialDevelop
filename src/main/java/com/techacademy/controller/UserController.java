@@ -27,6 +27,7 @@ public class UserController {
         this.service = service;
     }
 
+    //テスト対象検証
     /** 一覧画面を表示 */
     @GetMapping("/list")
     public String getList(Model model) {
@@ -34,6 +35,7 @@ public class UserController {
         model.addAttribute("userlist", service.getUserList());
         // user/list.htmlに画面遷移
         return "user/list";
+
     }
 
     /** User登録画面を表示 */
@@ -53,6 +55,7 @@ public class UserController {
         }
         // User登録
         service.saveUser(user);
+
         // 一覧画面にリダイレクト
         return "redirect:/user/list";
     }
@@ -71,7 +74,6 @@ public class UserController {
 //★getUserメソッドは「ユーザー情報を更新するための画面を表示するため」のメソッド
 
  //★postUserメソッドは、「画面で更新ボタンを押した時に、画面から入力された値をデータべースに反映するため」のメソッド
-
     /** User更新処理 */
     @PostMapping("/update/{id}/")
     public String postUser(@Validated User user, BindingResult result, Model model) {
@@ -81,7 +83,7 @@ public class UserController {
             return "user/update";
         }
 
-        // バリデーションが通った場合、Userを更新
+        //Userを更新
         service.saveUser(user);
 
         // 一覧画面にリダイレクト
@@ -98,8 +100,6 @@ public class UserController {
         return "redirect:/user/list";
     }
 
-//★下記、値が正しい場合はデータが保存され、User一覧画面に遷移します。
-    //※右の更新ボタンを押すと、http://localhost:8080/user/update/4/になっている
 
 
 
