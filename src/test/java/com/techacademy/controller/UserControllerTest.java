@@ -68,6 +68,11 @@ class UserControllerTest {
         assertEquals("キラメキ太郎", user.getName());
 
     }
+    //▷
+    @Test
+    @DisplayName("User一覧画面")
+    //@DisplayName でJUnitビューに表示されるテスト名を設定
+    @WithMockUser
     //★GetListメソッド課題
     void testGetList() throws Exception {
     	MvcResult result = mockMvc.perform(get("/user/list")) // URLにアクセス　//疑似的に動かすmock
@@ -80,15 +85,28 @@ class UserControllerTest {
     	//▶getUserListのリストはどんな形？複数存在するコレクション　形の探し方はserviceパッケージの中にあるUserServiceを見た
     	//▶上のresult（リザルド）からModelのUserlistを変数化した　項目75＝項目82に置き換わり　検証するために変数化
     	List<User> userlist = (List<User>)result.getModelAndView().getModel().get("userlist");
+
+    	//リストに入っている件数が3件かどうかを検証※
+    	//sizeというメソッドで要素数を数えます。このsizeメソッドの戻り値はintです。
+    	assertEquals(userlist.size(),3);
+
+    	//▷要素数を数えます　lesson8 > al.size();
+        //int listCount = al.size();
+        //System.out.println(listCount);
+
         //検証する内容運用保守のイメージ3回検証したことになる。
+
+    	//▷テストコード部位ごとにフォーカスを当てるので、DBから実際に取るのではなく、※モックで本来出したい値を疑似的に値を返す
+    	//J　unit　モック→検索。assertEquals
+    	//MySQL接続していると権限がそちらに持ってかれて、JUnitエラーが起きたので実行の際は、注意
     	assertEquals(userlist.get(0).getId(),1);//,カンマ区切りで前と後を一致しているか確認
-        assertEquals(userlist.get(0).getName(),"test");//★コレクションの複数形どれすか？左：テストの対象vs検査する値
+        assertEquals(userlist.get(0).getName(),"キラメキ太郎");//★コレクションの複数形どれすか？左：テストの対象vs検査する値
 
-        assertEquals(userlist.get(1).getId(),1);//,カンマ区切りで前と後を一致しているか確認
-        assertEquals(userlist.get(1).getName(),"test");//★コレクションの複数形どれすか？左：テストの対象vs検査する値
+        assertEquals(userlist.get(1).getId(),2);//,カンマ区切りで前と後を一致しているか確認
+        assertEquals(userlist.get(1).getName(),"キラメキ次郎");//★コレクションの複数形どれすか？左：テストの対象vs検査する値
 
-        assertEquals(userlist.get(2).getId(),1);//,カンマ区切りで前と後を一致しているか確認
-        assertEquals(userlist.get(2).getName(),"test");//★コレクションの複数形どれすか？左：テストの対象vs検査する値
+        assertEquals(userlist.get(2).getId(),3);//,カンマ区切りで前と後を一致しているか確認
+        assertEquals(userlist.get(2).getName(),"キラメキ花子");//★コレクションの複数形どれすか？左：テストの対象vs検査する値
 
     }
 
